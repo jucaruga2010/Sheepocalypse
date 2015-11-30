@@ -12,3 +12,4 @@ So, thats it. Good luck out there.
 
 The grass texture is a modification of the grass in the Sphax PureBDcraft texture pack for minecraft.
 The sheep sound was taken from http://www.freesound.org/
+For the sound we use the minim library for processing.
