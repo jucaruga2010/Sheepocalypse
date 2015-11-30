@@ -12,7 +12,7 @@ abstract class Button{
     this.y = y;
     NumObs = 0;
     NumEnts = 0;
-    sprite=loadImage("boton.png");
+    sprite=loadImage("button.png");
   }
   
   abstract void check();

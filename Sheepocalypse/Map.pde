@@ -1,4 +1,5 @@
 abstract class Map{
+
   Sheep[] sheeps;
   Button[] buttons;
   Obstacle[] obstacles;
@@ -30,3 +31,27 @@ abstract class Map{
   {
     return obstacles;
   }
+  
+  PImage getFondo()
+  {
+    return fondo;
+  }
+  
+  int NumSheeps()
+  {
+    return NumSheeps;
+  }
+  
+  int NumButtons()
+  {
+    return NumButtons;
+  }
+  
+  int NumObstacles()
+  {
+    return NumObstacles;
+  }
+  
+  abstract Map nextMap(Entity jugador);
+}
+  

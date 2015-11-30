@@ -1,7 +1,7 @@
 class Player extends Entity{
   public Player()
   { //<>//
-    speed = 4;
+    speed = 5;
     live = true;
     for(int i = 1 ; i < 5; i++)//cargamos las imagenes en el vector 
     {

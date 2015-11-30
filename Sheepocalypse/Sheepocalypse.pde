@@ -1,4 +1,9 @@
-Entity sheeps[]; //<>//
+import ddf.minim.*; //<>//
+Minim soundengine;
+AudioSample sheep_sound; 
+//AudioSample background_sound;
+AudioSample door_sound;
+Entity sheeps[];
 Entity jugador;
 Button buttons[];
 Obstacle obstacles[];
@@ -8,6 +13,10 @@ int NumSh, NumBu, NumOb;
 
 void setup()
 {
+  soundengine = new Minim(this);
+  sheep_sound = soundengine.loadSample("sheep.mp3", 1024);
+  //background_sound = soundengine.loadSample("song.mp3", 1024);
+  door_sound = soundengine.loadSample("door.mp3", 1024);
   frameRate(3);
   textMode(CENTER);
   rectMode(CENTER);
@@ -16,7 +25,7 @@ void setup()
   presentacion();
   frameRate(50);
   jugador= new Player();
-  mapa = new Map1(jugador);
+  mapa = new Map01(jugador);
   size(1024, 576);
   sheeps = mapa.getSheeps();
   buttons = mapa.getButtons();
@@ -26,6 +35,7 @@ void setup()
   NumBu = mapa.NumButtons();
   NumOb = mapa.NumObstacles();
   pause = false;
+  sheep_sound.trigger();
 }
   
 public void draw()
@@ -33,6 +43,7 @@ public void draw()
   if(jugador.getx() > 1024)
   {
     nextLevel();
+    sheep_sound.trigger();
   }
   else
   {
@@ -58,16 +69,14 @@ public void draw()
   if(!jugador.live)
   {
     pause = false; //<>//
-    fill(0);
-    rect(width / 2, height / 2, 300, 100);
-    fill(255);
-    text("RETRY?", width / 2 - 150, height / 2 + 25);
+    PImage retry = loadImage("retry.png");
+    image(retry, width * (3.0/4.0), height * (3.0/4.0));
   }
   if(pause)
   {
     stop = loadImage("continue.png");
-    fill(255);
-    text("PAUSE", width / 2 - 150, height / 2 + 25);
+    PImage pause_screen = loadImage("pause_screen.png");
+    image(pause_screen, width / 2, height / 2);
   }
   else
   {
@@ -81,7 +90,7 @@ public void draw()
 void reset()
 {
   jugador= new Player();
-  mapa = new Map1(jugador);
+  mapa = new Map01(jugador);
   sheeps = mapa.getSheeps();
   buttons = mapa.getButtons();
   obstacles = mapa.getObstacles();
@@ -131,13 +140,13 @@ public void keyPressed()
         if(pause)
         {
           pause = false;
-          PImage stop = loadImage("pause-continue.png");
+          PImage stop = loadImage("pause_continue.png");
           image(stop, 10, 10, 20, 20);
         }
         else
         {
           pause = true;
-          PImage stop = loadImage("pause-continue.png");
+          PImage stop = loadImage("pause_continue.png");
           image(stop, 10, 10, 20, 20);
         }
       }
@@ -155,9 +164,9 @@ void mousePressed()
   loop();
   if(!jugador.live)
   {
-    if(height/2 - 50 < mouseY && mouseY < height/2 + 50)
+    if(height* (3.0/4.0)-50 < mouseY && mouseY < height* (3.0/4.0)+50)
     {
-      if(width/2 - 150 < mouseX && mouseX < width/2 + 150)
+      if(width* (3.0/4.0)-150 < mouseX && mouseX < width* (3.0/4.0)+150)
       {
         reset();
       }
@@ -170,13 +179,13 @@ void mousePressed()
       if(pause)
       {
         pause = false;
-        PImage stop = loadImage("pause-continue.png");
+        PImage stop = loadImage("pause_continue.png");
         image(stop, 10, 10, 20, 20);
       }
       else
       {
         pause = true;
-        PImage stop = loadImage("pause-continue.png");
+        PImage stop = loadImage("pause_continue.png");
         image(stop, 10, 10, 20, 20);
       }
     }
