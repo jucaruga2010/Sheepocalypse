@@ -5,67 +5,85 @@ class Sheep extends Entity{
   
   public Sheep(int n, Entity presa) 
   {
-    speed = 1;
+    speed = 2;
     numeroOveja = n;
     this.presa = presa;
-    imgStream="frente obeja paint.jpg";
-    sprites[0]=loadImage(imgStream);
-    spriteActual=sprites[0];
-    run();
+    for(int i = 1 ; i < 5; i++)//cargamos las imagenes en el vector 
+    {
+      imgStream = "SHEEP"+i+".png";
+      sprites[i - 1] = loadImage(imgStream);
+    } 
+    spriteActual = sprites[0];
   }
   
   @Override
   void move(String direction, color c) {
     xPresa = presa.getx();
     yPresa = presa.gety();
-    double distancia = sqrt(((xPresa + this.getx())*(xPresa + this.getx()))+((yPresa + this.gety())*(yPresa + this.gety())));
-    
-    if(distancia < 120)
+    double distancia = sqrt(((xPresa - this.getx() )*(xPresa - this.getx() )) + ((yPresa - this.gety() )*(yPresa - this.gety() )));
+    boolean mov = true;
+    float distx = sqrt((xPresa - this.getx())*(xPresa - this.getx()));
+    float disty = sqrt((yPresa - this.gety())*(yPresa - this.gety()));
+    if(distx > disty)
     {
-      
+      if(this.getx() < xPresa)
+      {
+        direction = "right";
+      }
+      else
+      {
+        direction = "left";
+      }
     }
     else
     {
-      boolean mov = true;
-      float rdm = random(0)*4;
-      if(0<rdm && rdm<1)
+      if(this.gety() < yPresa)
       {
-        for(int i=0;i<3;i++)
+        direction = "down";
+      }
+      else
+      {
+        direction = "up";
+      }
+    }
+    switch(direction)
+      {
+      case "up":
+        for(int i=0;i<2;i++)
           for(int j=-14;j<15;j+=7)
             if( get(this.getx()+j, this.gety() - 15 - i) == c)
               mov = false;
         up(mov);
-      }
-      if(1<rdm && rdm<2)
-      {
+        break;
+      
+      case "down":
         for(int i=0;i<3;i++)
           for(int j=-14;j<15;j+=7)
             if( get(this.getx()+j, this.gety() + 15 + i) == c)
               mov = false;
         down(mov);
-      }
-      if(2<rdm && rdm<3)
-      {
+        break;
+      
+      case "left":
         for(int i=0;i<3;i++)
           for(int j=-14;j<15;j+=7)
             if( get(this.getx() - 15 - i, this.gety()+j) == c)
               mov = false;
         left(mov);
-      }
-      if(3<rdm && rdm<4)
-      {
+        break;
+      
+      case "right":
         for(int i=0;i<3;i++)
           for(int j=-14;j<15;j+=7)
             if( get(this.getx() + 15 + i, this.gety()+j) == c)
               mov = false;
         right(mov);
-      
+        break;
       }
-    }
-    println(distancia);
-    if(distancia < 40)
+    //println(distancia + " " + distx + " " + disty + " " + " " + this.getx() + " " + this.gety());
+    if(distancia < 30)
       presa.hurt();
-  }
+  } //<>// //<>// //<>// //<>// //<>//
 
   @Override
   void die() {
@@ -77,13 +95,7 @@ class Sheep extends Entity{
   void hurt() {
     // TODO Auto-generated method stub
     
-  }
-  
-  @Override
-  public void run()
-  {
-    move("", color(0,0,0));
-  }
+  } //<>// //<>//
 
  @Override
   void up(boolean mov) {
