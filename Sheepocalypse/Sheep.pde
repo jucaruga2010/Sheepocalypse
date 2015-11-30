@@ -1,19 +1,20 @@
 class Sheep extends Entity{
-  int numeroOveja;
   Entity presa;
   int xPresa, yPresa;
+  int changeDir, changeSprite;
   
-  public Sheep(int n, Entity presa) 
+  public Sheep(Entity presa)  //<>//
   {
     speed = 2;
-    numeroOveja = n;
     this.presa = presa;
     for(int i = 1 ; i < 5; i++)//cargamos las imagenes en el vector 
     {
       imgStream = "SHEEP"+i+".png";
       sprites[i - 1] = loadImage(imgStream);
     } 
-    spriteActual = sprites[0];
+    spriteActual = sprites[0]; //<>//
+    changeDir = 0;
+    changeSprite = 0;
   }
   
   @Override
@@ -24,8 +25,9 @@ class Sheep extends Entity{
     boolean mov = true;
     float distx = sqrt((xPresa - this.getx())*(xPresa - this.getx()));
     float disty = sqrt((yPresa - this.gety())*(yPresa - this.gety()));
-    if(distx > disty)
+    if( (distx > disty && changeDir < 15) || (-15 >= changeDir))
     {
+      int oldx = this.getx();
       if(this.getx() < xPresa)
       {
         direction = "right";
@@ -34,9 +36,14 @@ class Sheep extends Entity{
       {
         direction = "left";
       }
+      if(changeDir== -15)
+        changeDir = 0;
+      if(oldx == this.getx())
+        changeDir++;
     }
     else
     {
+      int oldy = this.gety();
       if(this.gety() < yPresa)
       {
         direction = "down";
@@ -45,62 +52,62 @@ class Sheep extends Entity{
       {
         direction = "up";
       }
+      if(changeDir== 15)
+        changeDir = 0;
+      if(oldy == this.gety())
+        changeDir--;
     }
     switch(direction)
       {
       case "up":
-        for(int i=0;i<2;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx()+j, this.gety() - 15 - i) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx() + j, this.gety() - 49 - i) == c)
               mov = false;
         up(mov);
         break;
       
       case "down":
-        for(int i=0;i<3;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx()+j, this.gety() + 15 + i) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx()+j, this.gety() + 49 + i) == c)
               mov = false;
         down(mov);
         break;
       
       case "left":
-        for(int i=0;i<3;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx() - 15 - i, this.gety()+j) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx() - 49 - i, this.gety()+j) == c)
               mov = false;
         left(mov);
         break;
       
       case "right":
-        for(int i=0;i<3;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx() + 15 + i, this.gety()+j) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx() + 49 + i, this.gety()+j) == c)
               mov = false;
         right(mov);
         break;
       }
-    //println(distancia + " " + distx + " " + disty + " " + " " + this.getx() + " " + this.gety());
-    if(distancia < 30)
-      presa.hurt();
-  } //<>// //<>// //<>// //<>// //<>//
+    if(distancia < 55)
+      presa.die();
+  } //<>//
 
   @Override
   void die() {
-    // TODO Auto-generated method stub
     
-  }
-  
-  @Override
-  void hurt() {
-    // TODO Auto-generated method stub
-    
-  } //<>// //<>//
+  } //<>//
 
  @Override
   void up(boolean mov) {
-    // TODO Auto-generated method stub
-    spriteActual=sprites[3];
+    changeSprite++;
+    if(changeSprite > 3)
+    {
+      spriteActual=sprites[3];
+      changeSprite = 0;
+    }
     if(mov)
       this.setxy(this.getx(), this.gety() - speed);
     
@@ -108,24 +115,36 @@ class Sheep extends Entity{
 
   @Override
   void down(boolean mov) {
-    // TODO Auto-generated method stub
-    spriteActual=sprites[0];
+    changeSprite++;
+    if(changeSprite > 3)
+    {
+      spriteActual=sprites[0];
+      changeSprite = 0;
+    }
     if(mov)
       this.setxy(this.getx(), this.gety() + speed);    
   }
 
   @Override
   void left(boolean mov) {
-    // TODO Auto-generated method stub
-    spriteActual=sprites[2];
+    changeSprite--;
+    if(changeSprite < -3)
+    {
+      spriteActual=sprites[2];
+      changeSprite = 0;
+    }
     if(mov)
       this.setxy(this.getx() - speed,this.gety());  
   }
 
   @Override
   void right(boolean mov) {
-    // TODO Auto-generated method stub
-    spriteActual=sprites[1];
+    changeSprite--;
+    if(changeSprite < -3)
+    {
+      spriteActual=sprites[1];
+      changeSprite = 0;
+    }
     if(mov)
       this.setxy(this.getx() + speed,this.gety());
   }

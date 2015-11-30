@@ -1,64 +1,55 @@
 class Player extends Entity{
-  
   public Player()
-  {
-    life = 3;
-    speed = 2;
+  { //<>//
+    speed = 4;
+    live = true;
     for(int i = 1 ; i < 5; i++)//cargamos las imagenes en el vector 
     {
-      imgStream = "pj"+i+".jpg";
+      imgStream = "PJ"+i+".png";
       sprites[i - 1] = loadImage(imgStream);
     }           
     for(int i = 1 ; i < 5; i++)//cargamos las imagenes en el vector 
     {
-      imgStream = "pjDamage"+i+".jpg";
+      imgStream = "pjDead"+i+".png";
       sprites[i + 3] = loadImage(imgStream);
-    }  
-    for(int i = 1 ; i < 5; i++)//cargamos las imagenes en el vector 
-    {
-      imgStream = "pjDead"+i+".jpg";
-      sprites[i + 7] = loadImage(imgStream);
-    }  
+    } 
     spriteActual = sprites[0];
   }
   
   @Override
   void move(String direction, color c) {
     boolean mov = true;
-    boolean live = true;
-    if(life <= 0)
-      live = false;
     if(live)
       switch(direction)
       {
       case "up":
-        for(int i=0;i<2;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx()+j, this.gety() - 15 - i) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx() + j, this.gety() - 49 - i) == c)
               mov = false;
         up(mov);
         break;
       
       case "down":
-        for(int i=0;i<3;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx()+j, this.gety() + 15 + i) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx()+j, this.gety() + 49 + i) == c)
               mov = false;
         down(mov);
         break;
       
       case "left":
-        for(int i=0;i<3;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx() - 15 - i, this.gety()+j) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx() - 49 - i, this.gety()+j) == c)
               mov = false;
         left(mov);
         break;
       
       case "right":
-        for(int i=0;i<3;i++)
-          for(int j=-14;j<15;j+=7)
-            if( get(this.getx() + 15 + i, this.gety()+j) == c)
+        for(int i=-1;i<1;i++)
+          for(int j=-45; j<46; j+=3)
+            if( get(this.getx() + 49 + i, this.gety()+j) == c)
               mov = false;
         right(mov);
         break;
@@ -66,9 +57,7 @@ class Player extends Entity{
   }
 
   @Override
-  void hurt()
-  {
-    life -= 1;
+  void die() {
     if(spriteActual==sprites[0])
       spriteActual=sprites[4];
     if(spriteActual==sprites[1])
@@ -77,30 +66,7 @@ class Player extends Entity{
       spriteActual=sprites[6];
     if(spriteActual==sprites[3])
       spriteActual=sprites[7];
-    image(jugador.getSpriteActual(), jugador.getx(), jugador.gety(), 30, 30);
-    if(spriteActual==sprites[4])
-      spriteActual=sprites[0];
-    if(spriteActual==sprites[5])
-      spriteActual=sprites[1];
-    if(spriteActual==sprites[6])
-      spriteActual=sprites[2];
-    if(spriteActual==sprites[7])
-      spriteActual=sprites[3];
-      
-    if(life==0)
-      die();
-  }
-
-  @Override
-  void die() {
-    if(spriteActual==sprites[0])
-      spriteActual=sprites[8];
-    if(spriteActual==sprites[1])
-      spriteActual=sprites[9];
-    if(spriteActual==sprites[2])
-      spriteActual=sprites[10];
-    if(spriteActual==sprites[3])
-      spriteActual=sprites[11];
+    live=false;
   }
 
   @Override

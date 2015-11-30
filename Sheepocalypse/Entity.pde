@@ -1,10 +1,10 @@
-abstract class Entity extends Thread{
+abstract class Entity{
   private int x, y;
   PImage spriteActual;
-  PImage sprites[] = new PImage[12];
+  PImage sprites[] = new PImage[8];
   String imgStream;
   int speed;
-  int life;
+  boolean live;
   
   void setxy(int x, int y)
   {
@@ -32,6 +32,5 @@ abstract class Entity extends Thread{
   abstract void down(boolean mov);
   abstract void left(boolean mov);
   abstract void right(boolean mov);
-  abstract void hurt();
   abstract void die();
 }
