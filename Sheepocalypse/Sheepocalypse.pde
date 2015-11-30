@@ -1,8 +1,6 @@
 import ddf.minim.*; //<>//
 Minim soundengine;
 AudioSample sheep_sound; 
-//AudioSample background_sound;
-AudioSample door_sound;
 Entity sheeps[];
 Entity jugador;
 Button buttons[];
@@ -15,8 +13,6 @@ void setup()
 {
   soundengine = new Minim(this);
   sheep_sound = soundengine.loadSample("sheep.mp3", 1024);
-  //background_sound = soundengine.loadSample("song.mp3", 1024);
-  door_sound = soundengine.loadSample("door.mp3", 1024);
   frameRate(3);
   textMode(CENTER);
   rectMode(CENTER);
@@ -45,8 +41,6 @@ public void draw()
     nextLevel();
     sheep_sound.trigger();
   }
-  else
-  {
   PImage fondo = mapa.getFondo();
   background(fondo);    
   for(int i=0; i<NumBu; i++)
@@ -83,8 +77,6 @@ public void draw()
     stop = loadImage("pause.png");
   }
   image(stop, 10, 10, 20, 20);
-  }
-  println(frameRate + "  " + frameCount);
 }
 
 void reset()

@@ -19,9 +19,9 @@ class Map09 extends Map{
     sheeps[1].setxy( 940, 491);
     buttons[0] = new StaticButton(420, 78);
     obstacles[0] = new Door(15, 395, 15, 395, 0, 0);
-    obstacles[1] = new Door(935, 12, 985, 70, 1, 0);
-    obstacles[2] = new Door(555, 412, 645, 488, 1, 0);
-    obstacles[3] = new Door(420, 130, 327, 74, 1, 1);
+    obstacles[1] = new Door(1000, 70, 935, 12, 1, 0);
+    obstacles[2] = new Door(555, 412, 645, 488, 0, 1);
+    obstacles[3] = new Door(420, 150, 327, 74, 0, 1);
     buttons[0].AddEntity(jugador);
     buttons[0].AddEntity(sheeps[0]);
     buttons[0].AddEntity(sheeps[1]);

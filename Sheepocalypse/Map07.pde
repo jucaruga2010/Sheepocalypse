@@ -6,8 +6,8 @@ class Map07 extends Map{
     buttons = new Button[1];
     obstacles = new Obstacle[4];
     fondo = loadImage("map7.png");
-    x = 60;
-    y = 285;
+    x = 90;
+    y = 90;
     NumSheeps = 2;
     NumButtons = 1;
     NumObstacles = 4;
@@ -19,9 +19,9 @@ class Map07 extends Map{
     sheeps[1].setxy(90, 500);
     buttons[0] = new StaticButton(350, 112);
     obstacles[0] = new Door(10, 85, 10, 85, 0, 0);
-    obstacles[1] = new Door(1014, 477, 920, 400, 1, 0);
-    obstacles[2] = new Door(80, 230, 216, 286, 1, 0);
-    obstacles[3] = new Door(571, 123, 480, 65, 1, 1);
+    obstacles[1] = new Door(1014, 477, 920, 380, 1, 0);
+    obstacles[2] = new Door(80, 230, 216, 286, 0, 1);
+    obstacles[3] = new Door(571, 123, 480, 65, 1, 0);
     buttons[0].AddEntity(jugador);
     buttons[0].AddEntity(sheeps[0]);
     buttons[0].AddEntity(sheeps[1]);
